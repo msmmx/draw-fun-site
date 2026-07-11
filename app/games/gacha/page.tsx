@@ -166,7 +166,7 @@ export default function GachaGame() {
         onStart={start}
         emoji="🎰"
         title="가챠 뽑기"
-        subtitle="참가자 이름을 줄바꿈 또는 쉼표로 구분해 입력하세요. (최소 2명)"
+        subtitle="참가자 이름을 한 명씩 입력하세요. (최소 2명)"
         buttonLabel="가챠 돌리러 가기"
       />
     );
