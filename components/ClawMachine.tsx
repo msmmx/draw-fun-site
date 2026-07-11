@@ -37,6 +37,7 @@ const CHUTE_Y = 296;
 const STEP = 18;
 const MAX_PLUSH = 12;
 
+const PHASE_DURATION: Partial<Record<Phase, number>> = {
   lowering: 700,
   grabbing: 320,
   rising: 700,
