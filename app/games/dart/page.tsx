@@ -197,14 +197,21 @@ export default function DartGame() {
   const powerColor = power < 0.5 ? "#4ade80" : power < 0.8 ? "#facc15" : "#f87171";
 
   return (
-    <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 px-6 py-12 md:grid-cols-[1fr_220px]">
+    <div className="mx-auto grid max-w-4xl animate-fadeUp grid-cols-1 gap-8 px-6 py-12 md:grid-cols-[1fr_220px]">
       <div className="flex flex-col items-center">
-        <p className="mb-4 text-center text-sm text-slate-500">
+        <p className="mb-5 max-w-sm rounded-full border border-white/5 bg-white/[0.03] px-4 py-2 text-center text-xs text-slate-400 sm:text-sm">
           다트를 눌러서 뒤로 당겼다가 놓아보세요. 과녁판이 멀어서 정확히 조준하긴 어렵지만,
           어디에 꽂히든 그건 순전히 랜덤이에요.
         </p>
 
         <div className="relative select-none" style={{ width: VIEW_W, height: VIEW_H, touchAction: "none" }}>
+          <div
+            className="pointer-events-none absolute inset-0 -z-10"
+            style={{
+              background:
+                "radial-gradient(circle at 50% 42%, rgba(249,115,22,0.10), transparent 60%)",
+            }}
+          />
           <svg viewBox={`0 0 ${VIEW_W} ${VIEW_H}`} width={VIEW_W} height={VIEW_H}>
             {/* 과녁판 (줌 대상 그룹) */}
             <g
@@ -313,16 +320,19 @@ export default function DartGame() {
         </p>
       </div>
 
-      <aside className="h-fit rounded-xl border border-slate-800 p-4">
-        <div className="mb-3 text-xs text-slate-500">참가자 명단</div>
+      <aside className="h-fit rounded-2xl border border-white/10 bg-white/[0.03] p-4 shadow-card">
+        <div className="mb-3 flex items-center gap-1.5 text-xs text-slate-500">
+          <span className="h-1.5 w-1.5 rounded-full bg-brand-500/70" />
+          참가자 명단
+        </div>
         <ol className="space-y-1 text-sm">
           {names.map((n, i) => (
             <li
               key={i}
               className={
                 stage === "revealed" && i === winnerIdx
-                  ? "font-semibold text-brand-500"
-                  : "text-slate-300"
+                  ? "rounded-lg bg-brand-500/10 px-2 py-1 font-semibold text-brand-400"
+                  : "px-2 py-1 text-slate-300"
               }
             >
               {i + 1}. {n}
