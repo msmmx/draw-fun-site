@@ -13,7 +13,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ko">
-      <body className="min-h-screen bg-transparent font-sans text-slate-100 antialiased">
+      <body className="min-h-screen font-sans text-slate-100 antialiased">
         <header className="sticky top-0 z-40 border-b border-white/5 bg-slate-950/60 px-6 py-4 backdrop-blur-lg">
           <a
             href="/"
