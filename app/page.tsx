@@ -12,12 +12,12 @@ const games = [
   },
   {
     id: "gacha",
-    title: "가챠 뽑기",
-    desc: "손잡이를 돌려 캡슐을 뽑고, 직접 열어서 당첨자를 확인해요",
+    title: "인형뽑기",
+    desc: "방향키로 집게를 움직여 인형을 뽑고, 누가 당첨됐는지 확인해요",
     href: "/games/gacha",
     ready: true,
-    emoji: "🎰",
-    gradient: "from-purple-500/20 to-pink-500/5",
+    emoji: "🧸",
+    gradient: "from-pink-500/20 to-fuchsia-500/5",
   },
   {
     id: "roulette",

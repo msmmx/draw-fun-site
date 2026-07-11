@@ -1,20 +1,11 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import { useState } from "react";
 import ParticipantInput from "@/components/ParticipantInput";
 import WinnerModal from "@/components/WinnerModal";
+import ClawMachine from "@/components/ClawMachine";
 
-const GachaScene = dynamic(() => import("@/components/GachaScene"), {
-  ssr: false,
-  loading: () => (
-    <div className="flex h-[440px] w-full max-w-xl items-center justify-center rounded-3xl border border-white/5 bg-white/[0.02] text-sm text-slate-500">
-      가챠 머신을 준비하는 중...
-    </div>
-  ),
-});
-
-type Stage = "input" | "machine" | "revealed";
+type Stage = "input" | "machine";
 
 export default function GachaGame() {
   const [names, setNames] = useState<string[]>([]);
@@ -31,7 +22,6 @@ export default function GachaGame() {
 
   const reset = () => {
     setWinnerIdx(null);
-    setStage("machine");
     setSceneKey((k) => k + 1);
   };
 
@@ -39,10 +29,10 @@ export default function GachaGame() {
     return (
       <ParticipantInput
         onStart={start}
-        emoji="🎰"
-        title="가챠 뽑기"
+        emoji="🧸"
+        title="인형뽑기"
         subtitle="참가자 이름을 한 명씩 입력하세요. (최소 2명)"
-        buttonLabel="가챠 돌리러 가기"
+        buttonLabel="인형 뽑으러 가기"
       />
     );
   }
@@ -51,11 +41,11 @@ export default function GachaGame() {
     <div className="mx-auto grid max-w-4xl animate-fadeUp grid-cols-1 gap-8 px-6 py-12 md:grid-cols-[1fr_220px]">
       <div className="flex flex-col items-center">
         <p className="mb-5 max-w-sm rounded-full border border-white/5 bg-white/[0.03] px-4 py-2 text-center text-xs text-slate-400 sm:text-sm">
-          버튼을 누르면 머신이 흔들리고, 캡슐 하나가 튀어나와 열려요. 어떤 캡슐이 나올지는
-          아무도 몰라요.
+          ←/→ 로 집게를 움직이고, 스페이스바나 화면의 내리기 버튼으로 뽑아보세요. 어떤 인형이
+          나올지는 아무도 몰라요.
         </p>
 
-        <GachaScene key={sceneKey} names={names} onRevealed={(idx) => setWinnerIdx(idx)} />
+        <ClawMachine key={sceneKey} names={names} onRevealed={(idx) => setWinnerIdx(idx)} />
       </div>
 
       <aside className="h-fit rounded-2xl border border-white/10 bg-white/[0.03] p-4 shadow-card">
