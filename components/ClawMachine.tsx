@@ -244,46 +244,70 @@ export default function ClawMachine({
 
   return (
     <div className="mx-auto w-full max-w-xl select-none">
-      <div className="relative overflow-hidden rounded-3xl bg-gradient-to-b from-pink-950/40 via-slate-950 to-slate-950 p-4">
+      <div className="relative px-2 py-6">
         <svg viewBox="0 0 320 520" className="w-full" style={{ maxHeight: 460 }}>
           <defs>
-            <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#FFC1DD" />
-              <stop offset="100%" stopColor="#F02E88" />
+            <linearGradient id="bodyGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#FFDCEE" />
+              <stop offset="45%" stopColor="#FF7DB6" />
+              <stop offset="100%" stopColor="#DE1269" />
             </linearGradient>
-            <linearGradient id="hoodGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#FFE3F0" />
-              <stop offset="100%" stopColor="#FF99C6" />
+            <linearGradient id="hoodGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#FFF6FB" />
+              <stop offset="55%" stopColor="#FFB8DE" />
+              <stop offset="100%" stopColor="#FF7DB6" />
             </linearGradient>
-            <linearGradient id="panelGrad" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0%" stopColor="#E22C82" />
-              <stop offset="100%" stopColor="#9C1259" />
+            <linearGradient id="panelGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stopColor="#FF5EA3" />
+              <stop offset="60%" stopColor="#D01167" />
+              <stop offset="100%" stopColor="#830C47" />
             </linearGradient>
+            <linearGradient id="glassGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor="#F0FDFF" stopOpacity={0.55} />
+              <stop offset="100%" stopColor="#FFE3F3" stopOpacity={0.12} />
+            </linearGradient>
+            <radialGradient id="glossHighlight" cx="30%" cy="18%" r="65%">
+              <stop offset="0%" stopColor="#FFFFFF" stopOpacity={0.55} />
+              <stop offset="100%" stopColor="#FFFFFF" stopOpacity={0} />
+            </radialGradient>
+            <radialGradient id="knobGloss" cx="35%" cy="28%" r="70%">
+              <stop offset="0%" stopColor="#FFFFFF" stopOpacity={0.95} />
+              <stop offset="100%" stopColor="#FFD6EA" stopOpacity={0} />
+            </radialGradient>
+            <filter id="floorBlur" x="-60%" y="-60%" width="220%" height="220%">
+              <feGaussianBlur stdDeviation="7" />
+            </filter>
+            <clipPath id="boxClip">
+              <rect x={50} y={BOX_TOP - 14} width={220} height={BOX_BOTTOM - BOX_TOP + 26} rx={26} />
+            </clipPath>
           </defs>
 
-          {/* 바닥 그림자 */}
-          <ellipse cx={160} cy={500} rx={120} ry={12} fill="#000000" opacity={0.35} />
+          {/* 바닥 그림자 (은은하게 번진 접지 그림자) */}
+          <ellipse cx={160} cy={504} rx={112} ry={14} fill="#7A0F45" opacity={0.28} filter="url(#floorBlur)" />
 
-          {/* 본체 */}
-          <rect x={25} y={90} width={270} height={385} rx={32} fill="url(#bodyGrad)" />
+          {/* 본체 — 광택 있는 플라스틱 느낌 */}
+          <rect x={25} y={90} width={270} height={385} rx={42} fill="url(#bodyGrad)" />
+          <ellipse cx={92} cy={230} rx={52} ry={155} fill="url(#glossHighlight)" />
 
-          {/* 후드 */}
-          <rect x={45} y={28} width={230} height={82} rx={40} fill="url(#hoodGrad)" />
-          <circle cx={110} cy={64} r={16} fill="#FFFDF6" opacity={0.85} />
-          <circle cx={210} cy={64} r={16} fill="#FFFDF6" opacity={0.85} />
+          {/* 후드 — 알약처럼 둥근 돔 */}
+          <rect x={45} y={20} width={230} height={96} rx={48} fill="url(#hoodGrad)" />
+          <ellipse cx={100} cy={44} rx={44} ry={22} fill="url(#glossHighlight)" />
 
-          {/* 유리 상자 (놀이 영역) */}
+          {/* 상단 조명 패널 */}
+          <rect x={95} y={36} width={42} height={13} rx={6} fill="#FFFDF6" opacity={0.9} />
+          <rect x={183} y={36} width={42} height={13} rx={6} fill="#FFFDF6" opacity={0.9} />
+
+          {/* 유리 진열창 */}
           <rect
-            x={55}
-            y={BOX_TOP - 8}
-            width={210}
-            height={BOX_BOTTOM - BOX_TOP + 18}
-            rx={20}
-            fill="#ffffff"
-            opacity={0.08}
-            stroke="#ffd6ea"
-            strokeOpacity={0.5}
-            strokeWidth={2}
+            x={50}
+            y={BOX_TOP - 14}
+            width={220}
+            height={BOX_BOTTOM - BOX_TOP + 26}
+            rx={26}
+            fill="url(#glassGrad)"
+            stroke="#FFFFFF"
+            strokeOpacity={0.55}
+            strokeWidth={2.5}
           />
 
           {/* 배출 구멍 */}
@@ -294,9 +318,6 @@ export default function ClawMachine({
 
           {/* 인형 더미 */}
           <g clipPath="url(#boxClip)">
-            <clipPath id="boxClip">
-              <rect x={55} y={BOX_TOP - 8} width={210} height={BOX_BOTTOM - BOX_TOP + 18} rx={20} />
-            </clipPath>
             {pile.map((p, i) => (
               <PlushIcon
                 key={i}
@@ -361,17 +382,29 @@ export default function ClawMachine({
             </g>
           </g>
 
+          {/* 유리 전면 반사광 (내용물 위에 살짝 겹치는 유리 하이라이트) */}
+          <g clipPath="url(#boxClip)" opacity={0.85}>
+            <path d="M68,108 L100,108 L82,190 L52,190 Z" fill="#FFFFFF" opacity={0.14} />
+            <path d="M172,108 L204,108 L186,232 L156,232 Z" fill="#FFFFFF" opacity={0.09} />
+          </g>
+
           {/* 컨트롤 패널 */}
-          <rect x={25} y={345} width={270} height={140} rx={28} fill="url(#panelGrad)" />
+          <rect x={25} y={345} width={270} height={140} rx={30} fill="url(#panelGrad)" />
+          <rect x={35} y={352} width={250} height={10} rx={5} fill="#FFFFFF" opacity={0.12} />
           <line x1={95} y1={345} x2={95} y2={322} stroke="#FF9CC7" strokeWidth={8} strokeLinecap="round" />
           <circle cx={95} cy={316} r={13} fill="#FFD6EA" stroke="#7A1F45" strokeWidth={2} />
+          <circle cx={95} cy={316} r={13} fill="url(#knobGloss)" />
           <circle cx={65} cy={402} r={15} fill="#FFD6EA" stroke="#7A1F45" strokeWidth={2} />
+          <circle cx={65} cy={402} r={15} fill="url(#knobGloss)" />
           <circle cx={105} cy={402} r={15} fill="#FFD6EA" stroke="#7A1F45" strokeWidth={2} />
+          <circle cx={105} cy={402} r={15} fill="url(#knobGloss)" />
           <rect x={150} y={455} width={110} height={16} rx={8} fill="#1a0a12" opacity={0.55} />
 
           {/* 받침대 */}
           <ellipse cx={70} cy={478} rx={14} ry={8} fill="#B01463" />
+          <ellipse cx={70} cy={475} rx={9} ry={3.5} fill="#FFFFFF" opacity={0.18} />
           <ellipse cx={250} cy={478} rx={14} ry={8} fill="#B01463" />
+          <ellipse cx={250} cy={475} rx={9} ry={3.5} fill="#FFFFFF" opacity={0.18} />
         </svg>
 
         {/* 상태 안내 */}
